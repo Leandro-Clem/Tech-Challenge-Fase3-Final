@@ -1,0 +1,26 @@
+# Sobe a API da Fase 2 e o front-end juntos.
+#
+# O caminho do back-end vem da variável BACKEND_PATH. Crie um arquivo .env
+# nesta pasta com, por exemplo:
+#
+#   BACKEND_PATH=../Tech-Challenge-Fase2-Final
+#
+# Se o .env não existir, vale o padrão abaixo.
+
+services:
+  api:
+    build:
+      context: ${BACKEND_PATH:-../Tech-Challenge-Fase2-Final}
+    environment:
+      JWT_SECRET: Chave_TechChallenge
+    ports:
+      - '3000:3000'
+
+  web:
+    build: .
+    depends_on:
+      - api
+    environment:
+      API_UPSTREAM: http://api:3000
+    ports:
+      - '8080:80'
