@@ -171,7 +171,7 @@ Esta publicação é sua: você pode editá-la ou excluí-la.
               </Button>
               <Button type="button" $variant="secondary" onClick={() => navigate('/admin')}>
                 <ShelfIcon size={16} />
-                Ir para minhas publicações
+                Ir para a administração
               </Button>
             </Row>
           </>

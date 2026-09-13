@@ -72,7 +72,7 @@ export default function EditPost() {
           <Empty>
             <h2>Publicação não encontrada</h2>
             <p>{loadError.message}</p>
-            <Link to="/admin">Voltar para minhas publicações</Link>
+            <Link to="/admin">Voltar para a administração</Link>
           </Empty>
         </Ruled>
       </Column>

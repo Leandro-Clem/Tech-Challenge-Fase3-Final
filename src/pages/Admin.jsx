@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {
@@ -75,6 +75,33 @@ const Table = styled.table`
   }
 `;
 
+const Filtro = styled.div`
+  display: inline-flex;
+  border: 1px solid ${({ theme }) => theme.colors.rule};
+  border-radius: ${({ theme }) => theme.radius.md};
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+
+  button {
+    background: ${({ theme }) => theme.colors.sheet};
+    border: 0;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.88rem;
+    color: ${({ theme }) => theme.colors.inkSoft};
+    cursor: pointer;
+  }
+
+  button + button {
+    border-left: 1px solid ${({ theme }) => theme.colors.rule};
+  }
+
+  button[aria-pressed='true'] {
+    background: ${({ theme }) => theme.colors.accentSoft};
+    color: ${({ theme }) => theme.colors.accent};
+    font-weight: 600;
+  }
+`;
+
 const TitleCell = styled.td`
   a {
     font-family: ${({ theme }) => theme.fonts.text};
@@ -112,6 +139,7 @@ export default function Admin() {
   const [error, setError] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [confirming, setConfirming] = useState(null);
+  const [escopo, setEscopo] = useState('minhas');
   const [deleting, setDeleting] = useState(null);
 
   const load = useCallback(async (signal) => {
@@ -158,15 +186,22 @@ export default function Admin() {
     }
   }
 
+  const visiveis = useMemo(
+    () => (escopo === 'minhas' ? posts.filter((post) => post.author === user?.username) : posts),
+    [posts, escopo, user],
+  );
+
+  const minhas = posts.filter((post) => post.author === user?.username).length;
+
   return (
     <Column $wide>
       <Ruled>
         <Head>
           <div>
-            <PageTitle>Minhas publicações</PageTitle>
+            <PageTitle>Administração</PageTitle>
             <Lead>
-              Tudo que já foi publicado na plataforma. Editar e excluir vale para as suas
-              publicações; as dos colegas aparecem apenas para leitura.
+              Editar e excluir vale para as suas publicações. As dos colegas aparecem apenas para
+              leitura, e a API recusa qualquer alteração nelas.
             </Lead>
           </div>
           <Button type="button" onClick={() => navigate('/posts/novo')}>
@@ -185,6 +220,21 @@ export default function Admin() {
 
         {error && <Notice>{error}</Notice>}
 
+        {!loading && !error && (
+          <Filtro role="group" aria-label="Filtrar publicações">
+            <button
+              type="button"
+              aria-pressed={escopo === 'minhas'}
+              onClick={() => setEscopo('minhas')}
+            >
+              Minhas ({minhas})
+            </button>
+            <button type="button" aria-pressed={escopo === 'todas'} onClick={() => setEscopo('todas')}>
+              Todas da plataforma ({posts.length})
+            </button>
+          </Filtro>
+        )}
+
         {loading && (
           <div aria-hidden="true" style={{ display: 'grid', gap: '0.8rem', marginTop: '1rem' }}>
             <SkeletonLine $h="1.4rem" />
@@ -193,15 +243,19 @@ export default function Admin() {
           </div>
         )}
 
-        {!loading && !error && posts.length === 0 && (
+        {!loading && !error && visiveis.length === 0 && (
           <Empty>
-            <h2>Nenhuma publicação por aqui</h2>
+            <h2>
+              {escopo === 'minhas'
+                ? 'Você ainda não publicou nada'
+                : 'Nenhuma publicação na plataforma'}
+            </h2>
             <p>Comece pelo básico: um título, um texto e a aula já está no ar.</p>
             <Link to="/posts/novo">Escrever publicação</Link>
           </Empty>
         )}
 
-        {!loading && !error && posts.length > 0 && (
+        {!loading && !error && visiveis.length > 0 && (
           <Table>
             <caption style={{ position: 'absolute', left: '-9999px' }}>
               Lista de publicações com ações de edição e exclusão
@@ -215,7 +269,7 @@ export default function Admin() {
               </tr>
             </thead>
             <tbody>
-              {posts.map((post) => (
+              {visiveis.map((post) => (
                 <tr key={post.id}>
                   <TitleCell>
                     <Link to={`/posts/${post.id}`}>{post.title}</Link>
