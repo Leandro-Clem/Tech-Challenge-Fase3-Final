@@ -3,6 +3,8 @@
 Interface gráfica em **React** para a plataforma de blogging de professores da rede pública, consumindo a API REST construída na Fase 2.
 
 **Aluno:** Leandro Clemente — Pós-Graduação em Full Stack Development (FIAP / POSTECH)
+**Link GitHub:**https://github.com/Leandro-Clem/Tech-Challenge-Fase3-Final
+**Apresentação em vídeo:** https://youtu.be/gkQu1XRImSE
 
 ---
 
@@ -274,7 +276,7 @@ A verificação de papel no front é conveniência de navegação; a autorizaç�
 
 1. Clique em *Entrar*, informe um nome de usuário e escolha o perfil **Professor**.
 2. Use *Escrever* para criar uma publicação. Separe os parágrafos com uma linha em branco — eles são renderizados individualmente na leitura.
-3. Em *Minhas publicações* estão todas as postagens, com botões de editar e excluir. A exclusão pede confirmação na própria linha antes de chamar a API.
+3. Em *Administração* estão as postagens, com um filtro entre "Minhas" (o padrão) e "Todas da plataforma" — o requisito 5 pede a lista completa, e o filtro evita que ela pareça uma lista pessoal. Editar e excluir só aparecem nas próprias publicações; nas dos colegas a linha mostra apenas quem publicou. A exclusão pede confirmação na própria linha antes de chamar a API.
 
 ---
 

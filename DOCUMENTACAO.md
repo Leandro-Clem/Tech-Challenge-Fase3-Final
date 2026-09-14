@@ -3,6 +3,8 @@
 **Aluno:** Leandro Clemente
 **Curso:** Pós-Graduação em Full Stack Development (FIAP / POSTECH)
 **Entrega:** interface gráfica em React para a aplicação de blogging desenvolvida nas fases anteriores
+**Link GitHub:**https://github.com/Leandro-Clem/Tech-Challenge-Fase3-Final
+**Apresentação em vídeo:** https://youtu.be/gkQu1XRImSE
 
 > Este documento complementa o `README.md`, que traz o setup e a referência técnica. Aqui estão a visão de arquitetura, o uso da aplicação e o relato de desenvolvimento. **Ajuste o relato final com a sua própria experiência antes de entregar.**
 
@@ -129,4 +131,4 @@ Entra informando usuário e perfil, e passa a ver dois itens novos na navegaçã
 | Documentação técnica | `README.md` |
 | Documento de arquitetura e relato | este arquivo |
 | Alterações do back-end para comentários | `backend-fase2-comentarios/` |
-| Apresentação gravada | link no repositório |
+| Apresentação gravada | https://youtu.be/gkQu1XRImSE |
